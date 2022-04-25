@@ -19,11 +19,22 @@ address delete_after(address head, int nilai);
 void tampil_nilai(address head);
 address count (address head);
 address dispose(address head);
-
+address reverse(address head);
+address sorting(address head);
 
 int main() {
     int pilih = -1, val, val1;
     address head = NULL;
+    head = insert_first(head, 56);
+    head = insert_first(head, 7);
+    head = insert_first(head, 20);
+    head = insert_first(head, 41);
+    head = insert_first(head, 28);
+    head = insert_first(head, 56);
+    head = insert_first(head, 86);
+    head = insert_first(head, 40);
+    head = insert_first(head, 97);
+    head = insert_first(head, 33);
 
     do {
         system("cls");
@@ -38,7 +49,9 @@ int main() {
         printf(" 7. Delete After\n");
         printf(" 8. Hitung Jumlah Node\n");
         printf(" 9. Hapus Keseluruhan Node\n");
-        printf(" 10. Keluar\n");
+        printf(" 10. Reverse\n");
+        printf(" 11. Sorting\n");
+        printf(" 12. Keluar\n");
         printf("\nPilihan Anda: ");
         scanf("%d", &pilih);
 
@@ -88,6 +101,7 @@ int main() {
             case 7: {
                 printf("Masukkan nilai yang ingin di hapus: ");
                 scanf("%d", &val);
+                head = delete_after(head, val);
                 system("cls");
                 break;
             }
@@ -102,6 +116,15 @@ int main() {
                 break;
             }
             case 10: {
+                head = reverse(head);
+                system("Pause");
+                break;
+            }
+            case 11: {
+                head = sorting(head);
+                break;
+            }
+            case 12: {
                 exit(1);
             }
             default: {
@@ -249,6 +272,56 @@ address dispose(address head) {
         }
 
         printf("Semua Node Telah Dihapus\n");
+        return(head);
+    }
+}
+
+address reverse(address head) {
+    address prev, curr;
+
+    if(head != NULL) {
+        prev = head;
+        curr = head->next;
+        head = head->next;
+
+        prev->next = NULL;
+
+        while (head != NULL) {
+            head = head->next;
+            curr->next=prev;
+
+            prev = curr;
+            curr = head;
+        }
+
+        head = prev;
+    }
+    return (head);
+}
+
+address sorting(address head) {
+    address prev, last;
+    last = NULL;
+
+    int temp;
+    int num = 1;
+
+    if (head != NULL) {
+        while (num) {
+            num = 0;
+            prev = head;
+
+            while (prev->next != last) {
+                if (prev->isi < prev->next->isi) {
+                    temp = prev->isi;
+                    prev->isi = prev->next->isi;
+                    prev->next->isi = temp;
+                    num = 1;
+                }
+                prev = prev->next;
+            }
+            last = prev;
+        }
         return(head);
     }
 }
